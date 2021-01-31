@@ -4,7 +4,7 @@ import "os"
 
 // Config ...
 type Config struct {
-	Environment string
+	Environment   string
 	ConnectionStr string
 }
 
@@ -19,7 +19,7 @@ func getConfigValue(envName string, defaultValue string) string {
 // NewConfig ...
 func NewConfig() *Config {
 	return &Config{
-		Environment: getConfigValue("ENV", "local"),
+		Environment:   getConfigValue("ENV", "local"),
 		ConnectionStr: getConfigValue("CONN_STRING", "root:root@tcp(localhost:3306)/votingdb"),
 	}
 }

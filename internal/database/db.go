@@ -2,7 +2,7 @@ package database
 
 import (
 	"github.com/alex-pumnea/go-voting-api/internal/config"
-	_"github.com/go-sql-driver/mysql" // mysql driver
+	_ "github.com/go-sql-driver/mysql" // mysql driver
 	"github.com/jmoiron/sqlx"
 )
 
