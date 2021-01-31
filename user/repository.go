@@ -10,8 +10,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// Repositary ...
-type Repositary struct {
+// Repository ...
+type Repository struct {
 	db sqlx.DB
 }
 
@@ -25,7 +25,7 @@ func hashAndSaltPwd(password string) (string, error) {
 	return string(pwd), err
 }
 
-func (r *Repositary) updateUser(user User, fields ...string) error {
+func (r *Repository) updateUser(user User, fields ...string) error {
 	var updateFields = make([]string, len(fields))
 	for i, f := range fields {
 		updateFields[i] = fmt.Sprintf("%s=:%s", f, f)
@@ -37,7 +37,7 @@ func (r *Repositary) updateUser(user User, fields ...string) error {
 }
 
 // CreateUser inserts given user to db with salted password and returns same user with id
-func (r *Repositary) CreateUser(user User) (*User, error) {
+func (r *Repository) CreateUser(user User) (*User, error) {
 	user.ID = uuid.New().String()
 	var err error
 	user.Password, err = hashAndSaltPwd(user.Password)
@@ -54,19 +54,19 @@ func (r *Repositary) CreateUser(user User) (*User, error) {
 }
 
 // Get ...
-func (r *Repositary) Get(id string) (User, error) {
+func (r *Repository) Get(id string) (User, error) {
 	user := User{}
 	err := r.db.Get(&user, getUserDataSQL, id)
 	return user, err
 }
 
 // Update ...
-func (r *Repositary) Update(user User) error {
+func (r *Repository) Update(user User) error {
 	return r.updateUser(user, "name", "email")
 }
 
 // Delete ...
-func (r *Repositary) Delete(id string) error {
+func (r *Repository) Delete(id string) error {
 	_, err := r.db.Exec(deleteUserSQL, id)
 	return err
 }
